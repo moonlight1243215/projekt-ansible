@@ -1,0 +1,59 @@
+---
+- name: Konfiguracja Windows Server - Uzytkownicy i Aplikacje
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Utworzenie grupy Kierownicy
+      ansible.windows.win_group:
+        name: Kierownicy_Szywacz
+        state: present
+
+    - name: Utworzenie uzytkownika Marek Romanek
+      ansible.windows.win_user:
+        name: Marek Romanek
+        password: Password123!
+        state: present
+        groups:
+          - Kierownicy_Szywacz
+
+    - name: Utworzenie uzytkownika Jacek Gula
+      ansible.windows.win_user:
+        name: Jacek Gula
+        password: Password123!
+        state: present
+        groups:
+          - Kierownicy_Szywacz
+
+    - name: Utworzenie katalogu Projekty na dysku F
+      ansible.windows.win_file:
+        path: F:\Projekty
+        state: directory
+
+    - name: Udostepnienie katalogu w sieci
+      ansible.windows.win_share:
+        name: Projekty_Szywacz
+        path: F:\Projekty
+        full: Kierownicy_Szywacz
+        read: Administrators
+
+    - name: Instalacja Chocolatey (wymagane do instalacji aplikacji)
+      ansible.windows.win_chocolatey:
+        name: chocolatey
+        state: present
+
+    - name: Instalacja Firefox
+      ansible.windows.win_chocolatey:
+        name: firefox
+        state: present
+
+    - name: Instalacja 7zip
+      ansible.windows.win_chocolatey:
+        name: 7zip
+        state: present
+
+    - name: Dodanie wpisu do rejestru (blokada usuwania drukarek)
+      ansible.windows.win_regedit:
+        path: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer
+        name: NoDeletePrinter
+        data: 1
+        type: dword
