@@ -37,17 +37,17 @@
         read: Administrators
 
     - name: Instalacja Chocolatey (wymagane do instalacji aplikacji)
-      ansible.windows.win_chocolatey:
+      chocolatey.chocolatey.win_chocolatey:
         name: chocolatey
         state: present
 
     - name: Instalacja Firefox
-      ansible.windows.win_chocolatey:
+      chocolatey.chocolatey.win_chocolatey:
         name: firefox
         state: present
 
     - name: Instalacja 7zip
-      ansible.windows.win_chocolatey:
+      chocolatey.chocolatey.win_chocolatey:
         name: 7zip
         state: present
 
