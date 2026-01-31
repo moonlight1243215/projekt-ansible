@@ -1,0 +1,12 @@
+---
+- name: Aktualizacja Systemu - Krzysztof Szywacz
+  hosts: agh
+  become: yes
+  tasks:
+    - name: Aktualizacja cache (apt-get update)
+      apt:
+        update_cache: yes
+
+    - name: Aktualizacja pakietów (apt-get dist-upgrade)
+      apt:
+        upgrade: dist
