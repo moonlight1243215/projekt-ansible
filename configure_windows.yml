@@ -51,6 +51,11 @@
         name: 7zip
         state: present
 
+    - name: Instalacja Dig (narzedzie DNS)
+      chocolatey.chocolatey.win_chocolatey:
+        name: bind-toolsonly
+        state: present
+
     - name: Dodanie wpisu do rejestru (blokada usuwania drukarek)
       ansible.windows.win_regedit:
         path: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer
