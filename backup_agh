@@ -1,0 +1,17 @@
+  GNU nano 7.2                                /home/user/projekt/backup_agh.yml
+---
+- name: Kopia Zapasowa AdGuard - Krzysztof Szywacz
+  hosts: agh
+  become: yes
+  tasks:
+    - name: Utworzenie katalogu na backup (lokalnie)
+      local_action:
+        module: file
+        path: ~/projekt/backup
+        state: directory
+
+    - name: Pobranie pliku konfiguracyjnego do Ansible
+      fetch:
+        src: /adguardhome/AdGuardHome/AdGuardHome.yaml
+        dest: ~/projekt/backup/
+        flat: yes
